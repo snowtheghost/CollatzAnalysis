@@ -75,16 +75,28 @@ def get_pattern(removed):
             return "No pattern found"
         i += 1
 
-    pattern = f"{delta}x - {delta - removed[0]}"
+    pattern = f"{delta}x {sign(removed[i] - delta)} {abs(delta - removed[0])}"
     return pattern
+
+
+def sign(number):
+    if number >= 0:
+        return "+"
+    else:
+        return "-"
 
 
 if __name__ == "__main__":
     results = odd_results(100)
     print_results(odd_results(100), "n")
+    input()
 
-    while True:
-        print()
-        extend(results, int(input("Factor: ")))
-        print(get_pattern(remove_decreasing(results)))
-        print_results(results, "n")
+    while len(results.keys()) > 0:
+        extend(results, 1)
+        removed = remove_decreasing(results)
+        if len(removed) > 0:
+            print(removed)
+            print(get_pattern(removed))
+            print_results(results, "n")
+            input()
+        # print(get_pattern(remove_decreasing(results)))
